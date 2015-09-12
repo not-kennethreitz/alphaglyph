@@ -52,6 +52,7 @@ CODEX = {
 
 
 def iter_transcode(s):
+
     for a in s:
         if a in CODEX:
             yield CODEX[a][0]
@@ -60,5 +61,3 @@ def iter_transcode(s):
 
 def transcode(s):
     return ''.join([a for a in iter_transcode(s)])
-
-print transcode('Kenneth Robert Reitz')
