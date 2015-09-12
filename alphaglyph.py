@@ -50,6 +50,9 @@ CODEX = {
     'x': (u'\u03C9', 'omega')
 }
 
+for latin_letter, (greek_letter, name) in CODEX.items():
+    CODEX[greek_letter] = (latin_letter, latin_letter)
+
 
 def iter_transcode(s):
 
