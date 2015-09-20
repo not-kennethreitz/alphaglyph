@@ -50,6 +50,9 @@ CODEX = {
     'x': (u'\u03C9', 'omega')
 }
 
+for latin_letter, (greek_letter, name) in CODEX.items():
+    CODEX[greek_letter] = (latin_letter, latin_letter)
+
 
 def iter_transcode(s):
 
@@ -61,3 +64,25 @@ def iter_transcode(s):
 
 def transcode(s):
     return ''.join([a for a in iter_transcode(s)])
+
+
+def transcode_stream(instream, outstream):
+    buf = b''
+    while True:
+        octet = instream.read(1)
+        buf += octet
+        try:
+            text = buf.decode('utf-8')
+        except UnicodeDecodeError:
+            pass
+        else:
+            buf = b''
+            outstream.write(transcode(text))
+            outstream.flush()
+        if not octet:
+            break
+
+
+if __name__ == '__main__':
+    import sys
+    transcode_stream(sys.stdin, sys.stdout)
